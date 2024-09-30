@@ -78,8 +78,29 @@
                 <h2>Tag Selected Patients</h2>
                 <input type="text" id="tags" placeholder="Enter tags (comma-separated)">
                 <button type="button" onclick="submitTags()">Submit Tags</button>
+                <br><br>
+                <button type="button" onclick="selectAll()">Select All</button>
+                <button type="button" onclick="deselectAll()">Deselect All</button>
             </div>
         </div>
+
+        <script>
+            function selectAll() {
+                const checkboxes = document.querySelectorAll('input[name="selected_patients"]');
+                checkboxes.forEach((checkbox) => {
+                    checkbox.checked = true;
+                });
+                toggleActionBox(); // Update action box visibility
+            }
+
+            function deselectAll() {
+                const checkboxes = document.querySelectorAll('input[name="selected_patients"]');
+                checkboxes.forEach((checkbox) => {
+                    checkbox.checked = false;
+                });
+                toggleActionBox(); // Update action box visibility
+            }
+        </script>
 
         <style>
             .modal {
