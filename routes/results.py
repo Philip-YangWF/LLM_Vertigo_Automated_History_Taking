@@ -3,29 +3,40 @@ from models import db, Patient
 
 results_bp = Blueprint('results_bp', __name__)
 
-@results_bp.route('/results')
+@results_bp.route('/results', methods=['GET', 'POST'])
 def show_results():
     search_query = request.args.get('search', '')  # Get the search query from the request
     filter_age_min = request.args.get('age_min', type=int)
     filter_age_max = request.args.get('age_max', type=int)
+    page = request.args.get('page', 1, type=int)  # Get the page number from the URL
+    per_page = 10  # Set how many results to display per page
 
-    patients = Patient.query
+    # Start with a base query
+    patients_query = Patient.query
 
+    # Apply filtering based on the search query
     if search_query:
-        patients = patients.filter(
+        patients_query = patients_query.filter(
             Patient.name.ilike(f"%{search_query}%") |
             Patient.contact.ilike(f"%{search_query}%") |
             Patient.gender.ilike(f"%{search_query}%")
         )
 
+    # Apply age filtering
     if filter_age_min is not None:
-        patients = patients.filter(Patient.age >= filter_age_min)
+        patients_query = patients_query.filter(Patient.age >= filter_age_min)
 
     if filter_age_max is not None:
-        patients = patients.filter(Patient.age <= filter_age_max)
+        patients_query = patients_query.filter(Patient.age <= filter_age_max)
 
-    patients = patients.all()  # Get the filtered patients
-    return render_template('results.html', patients=patients, search_query=search_query)
+    # Paginate results
+    patients = patients_query.paginate(page=page, per_page=per_page, error_out=False)
+
+    total_count = patients_query.count()  # Total number of patients
+
+    return render_template('results.html', patients=patients.items,
+                           total_count=total_count, current_page=page,
+                           total_pages=patients.pages)
 
 
 @results_bp.route('/edit/<int:id>', methods=['GET', 'POST'])
@@ -33,6 +44,7 @@ def edit_patient(id):
     patient = Patient.query.get_or_404(id)
 
     if request.method == 'POST':
+        # Update patient details from the form
         patient.name = request.form['name']
         patient.age = request.form['age']
         patient.gender = request.form['gender']
@@ -52,7 +64,8 @@ def edit_patient(id):
         patient.daily_impact = request.form['daily_impact']
         patient.past_medical_history = request.form['past_medical_history']
         patient.medications = request.form['medications']
-        patient.tags = request.form.get('tags', '')  # Store as a comma-separated string
+        patient.tags = request.form.get('tags', '')  # Store tags
+
         db.session.commit()
         return redirect(url_for('results_bp.show_results'))
 
@@ -69,7 +82,6 @@ def delete_patient(id):
 def view_patient(id):
     patient = Patient.query.get_or_404(id)
     return render_template('view.html', patient=patient)
-
 
 @results_bp.route('/mass_action', methods=['POST'])
 def mass_action():

@@ -1,109 +1,108 @@
 /* General Body Styling */
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f2f5f9; /* Light background */
+    font-family: 'Open Sans', sans-serif;
+    background-color: #e0f7fa; /* Light blue background */
     color: #333;
     margin: 0;
     padding: 0;
 }
 
-/* Container Styling */
+/* Container for dashboard elements */
 .container {
-    padding: 30px;
-    background-color: #ffffff; /* White background */
-    border-radius: 12px;
-    max-width: 900px;
+    padding: 20px;
+    background-color: #ffffff; /* White background for containers */
+    border-radius: 15px; /* Rounded edges */
+    width: 100%;
+    max-width: 1300px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow */
     margin: 30px auto;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+/* Card Layout for Each Graph */
+.card {
+    background-color: #ffffff;
+    border-radius: 15px; /* Rounded edges */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    margin-bottom: 30px;
 }
 
 /* Headings */
-h1 {
-    text-align: center;
-    font-size: 2.2rem;
-    color: #0d6efd; /* Blue title */
+h1, h2 {
+    color: #00796b; /* Seafoam green color for headings */
+    font-weight: 600;
     margin-bottom: 20px;
 }
 
-/* Input Field Styling */
-input[type="text"], input[type="number"], input[type="date"], select, textarea {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0 20px 0;
+/* Button Styling */
+.button {
     display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    box-sizing: border-box;
-    font-size: 1rem;
-    background-color: #f9f9f9; /* Slight background color */
-}
-
-/* Submit Button Styling */
-input[type="submit"] {
-    background-color: #0d6efd; /* Primary blue button */
+    padding: 10px 25px;
+    background-color: #00796b; /* Seafoam green */
     color: white;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    border-radius: 8px; /* Rounded edges */
     font-size: 1.1rem;
+    text-align: center;
+    text-decoration: none;
     transition: background-color 0.3s ease;
+    margin-top: 20px;
 }
 
-input[type="submit"]:hover {
-    background-color: #0b5ed7; /* Darker blue on hover */
+.button:hover {
+    background-color: #004d40; /* Darker shade of seafoam green on hover */
 }
 
 /* Table Styling */
 table {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 20px;
     background-color: #fff;
-    margin: 20px 0;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Soft shadow */
 }
 
 table th, table td {
-    padding: 15px 20px;
+    padding: 15px;
     text-align: left;
-    border-bottom: 1px solid #e9e9e9;
     color: #333;
 }
 
 table th {
-    background-color: #0d6efd; /* Blue header */
+    background-color: #4db6ac; /* Light seafoam green for table header */
     color: white;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-weight: bold;
 }
 
 table tr:nth-child(even) {
-    background-color: #f7f7f7;
+    background-color: #f2f2f2;
 }
 
 table tr:hover {
-    background-color: #f1f5ff; /* Light blue on hover */
+    background-color: #e0f2f1; /* Light green on hover */
 }
 
-/* Button Styling for Actions */
-table td a, table td button {
-    color: #0d6efd;
-    padding: 8px 12px;
+table td a {
+    color: #00796b; /* Seafoam green for links */
     text-decoration: none;
-    border-radius: 6px;
-    border: 1px solid transparent;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
-table td a:hover, table td button:hover {
-    background-color: #0d6efd;
+table td a:hover {
+    background-color: #00796b;
     color: white;
 }
 
-/* Pagination Styling */
+/* Graph Styling */
+.graph-container {
+    transition: transform 0.2s;
+}
+
+.graph-container:hover {
+    transform: scale(1.02); /* Slight zoom-in effect */
+}
+
+/* Pagination */
 .pagination {
     display: flex;
     justify-content: center;
@@ -111,16 +110,16 @@ table td a:hover, table td button:hover {
 }
 
 .pagination a {
-    color: #0d6efd;
     padding: 10px 15px;
+    color: #00796b;
     text-decoration: none;
-    border: 1px solid #0d6efd;
+    border: 1px solid #00796b;
+    border-radius: 6px; /* Rounded edges */
     margin: 0 5px;
-    border-radius: 6px;
 }
 
 .pagination a:hover {
-    background-color: #0d6efd;
+    background-color: #00796b;
     color: white;
 }
 
@@ -130,41 +129,12 @@ table td a:hover, table td button:hover {
         padding: 15px;
     }
 
-    table th, table td {
-        padding: 10px;
-    }
-
     input[type="submit"], a.button {
         width: 100%;
         margin: 10px 0;
     }
-}
 
-/* Button Styling */
-.button {
-    display: inline-block;
-    padding: 10px 25px;
-    background-color: #007bff; /* Primary button color */
-    color: white;
-    border-radius: 6px;
-    font-size: 1.1rem;
-    text-align: center;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-    margin-top: 20px;
-}
-
-.button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-}
-
-.action-box {
-    background-color: #007bff; /* Primary color */
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 15px;
-    display: flex;
-    justify-content: flex-start;
-    gap: 10px; /* Space between buttons */
+    table th, table td {
+        padding: 10px;
+    }
 }
