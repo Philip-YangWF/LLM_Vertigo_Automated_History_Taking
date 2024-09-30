@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Patient Information</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Include Tagify CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css">
 </head>
 <body>
     <div class="container">
@@ -92,7 +94,17 @@
 
             <!-- Submit Button -->
             <input type="submit" value="Update">
+
+            <label for="tags">Tags (comma-separated):</label>
+            <input type="text" id="tags" name="tags" value="{{ patient.tags }}">
+
+            <input type="submit" value="Update">
         </form>
     </div>
+    <!-- Include Tagify JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+    <script>
+        new Tagify(document.getElementById('tags'));
+    </script>
 </body>
 </html>

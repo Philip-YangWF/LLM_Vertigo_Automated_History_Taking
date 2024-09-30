@@ -32,7 +32,7 @@ def edit_patient(id):
         patient.daily_impact = request.form['daily_impact']
         patient.past_medical_history = request.form['past_medical_history']
         patient.medications = request.form['medications']
-
+        patient.tags = request.form.get('tags', '')  # Store as a comma-separated string
         db.session.commit()
         return redirect(url_for('results_bp.show_results'))
 

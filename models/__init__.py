@@ -23,3 +23,4 @@ class Patient(db.Model):
     daily_impact = db.Column(db.Text, nullable=True)
     past_medical_history = db.Column(db.Text, nullable=True)
     medications = db.Column(db.Text, nullable=True)
+    tags = db.Column(db.String(200), nullable=True)
