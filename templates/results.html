@@ -7,12 +7,110 @@
 <body>
     <div class="container">
         <h1>Patient Results</h1>
+        <form method="POST" action="{{ url_for('results_bp.mass_action') }}">
+            <input type="text" name="search" placeholder="Search patients..." value="{{ search_query }}">
+            <input type="number" name="age_min" placeholder="Min Age">
+            <input type="number" name="age_max" placeholder="Max Age">
+            <input type="submit" value="Filter">
+
+            <!-- Temporary Action Box -->
+            <div id="action-box" style="display: none;" class="action-box">
+                <button type="submit" name="action" value="delete">Delete Selected</button>
+                <button type="button" onclick="openTagModal()">Tag Selected</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Contact</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patients %}
+                    <tr>
+                        <td><input type="checkbox" name="selected_patients" value="{{ patient.id }}" onchange="toggleActionBox()"></td>
+                        <td>{{ patient.name }}</td>
+                        <td>{{ patient.age }}</td>
+                        <td>{{ patient.gender }}</td>
+                        <td>{{ patient.contact }}</td>
+                        <td>
+                            <a href="{{ url_for('results_bp.view_patient', id=patient.id) }}">View</a>
+                            <a href="{{ url_for('results_bp.edit_patient', id=patient.id) }}">Edit</a>
+                            <form action="{{ url_for('results_bp.delete_patient', id=patient.id) }}" method="POST" style="display:inline;">
+                                <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this patient?');">
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </form>
+
+        <!-- JavaScript to handle showing the action box -->
+        <script>
+            function toggleActionBox() {
+                const checkboxes = document.querySelectorAll('input[name="selected_patients"]');
+                const actionBox = document.getElementById('action-box');
+                const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+                actionBox.style.display = anyChecked ? 'block' : 'none';
+            }
+
+            function openTagModal() {
+                const modal = document.getElementById('tagModal');
+                modal.style.display = 'block';
+            }
+
+            function closeTagModal() {
+                const modal = document.getElementById('tagModal');
+                modal.style.display = 'none';
+            }
+        </script>
+
+        <!-- Tagging Modal -->
+        <div id="tagModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeTagModal()">&times;</span>
+                <h2>Tag Selected Patients</h2>
+                <input type="text" id="tags" placeholder="Enter tags (comma-separated)">
+                <button type="button" onclick="submitTags()">Submit Tags</button>
+            </div>
+        </div>
+
+        <style>
+            .modal {
+                display: none;
+                position: fixed;
+                z-index: 1;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+                background-color: rgb(0,0,0);
+                background-color: rgba(0,0,0,0.4);
+                padding-top: 60px;
+            }
+            .modal-content {
+                background-color: #fefefe;
+                margin: 5% auto;
+                padding: 20px;
+                border: 1px solid #888;
+                width: 80%;
+            }
+        </style>
+
         <table>
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>Age</th>
                     <th>Gender</th>
+                    <th>Contact</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -22,17 +120,19 @@
                     <td>{{ patient.name }}</td>
                     <td>{{ patient.age }}</td>
                     <td>{{ patient.gender }}</td>
+                    <td>{{ patient.contact }}</td>
                     <td>
-                        <a href="{{ url_for('results_bp.view_patient', id=patient.id) }}">View</a> |
-                        <a href="{{ url_for('results_bp.edit_patient', id=patient.id) }}">Edit</a> |
+                        <a href="{{ url_for('results_bp.view_patient', id=patient.id) }}">View</a>
+                        <a href="{{ url_for('results_bp.edit_patient', id=patient.id) }}">Edit</a>
                         <form action="{{ url_for('results_bp.delete_patient', id=patient.id) }}" method="POST" style="display:inline;">
-                            <button type="submit">Delete</button>
+                            <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this patient?');">
                         </form>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+
 
         <a href="{{ url_for('screening_bp.screening') }}" class="button">Add New Patient</a>
 
