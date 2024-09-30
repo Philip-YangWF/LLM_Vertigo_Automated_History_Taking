@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>View Patient</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Patient Profile: {{ patient.name }}</h1>
+        <p><strong>Age:</strong> {{ patient.age }}</p>
+        <p><strong>Gender:</strong> {{ patient.gender }}</p>
+        <p><strong>Contact:</strong> {{ patient.contact }}</p>
+        <p><strong>Dizziness Onset:</strong> {{ patient.dizziness_onset }}</p>
+        <p><strong>Dizziness Duration:</strong> {{ patient.dizziness_duration }}</p>
+        <p><strong>Dizziness Trigger:</strong> {{ patient.dizziness_trigger }}</p>
+        <p><strong>Dizziness Character:</strong> {{ patient.dizziness_character }}</p>
+        <p><strong>Hearing Loss:</strong> {{ patient.hearing_loss }}</p>
+        <p><strong>Tinnitus:</strong> {{ patient.tinnitus }}</p>
+        <p><strong>Nausea/Vomiting:</strong> {{ patient.nausea_vomiting }}</p>
+        <p><strong>Visual Disturbance:</strong> {{ patient.visual_disturbance }}</p>
+        <p><strong>Neurological Symptoms:</strong> {{ patient.neurological_symptoms }}</p>
+        <p><strong>Headache:</strong> {{ patient.headache }}</p>
+        <p><strong>Chest Pain:</strong> {{ patient.chest_pain }}</p>
+        <p><strong>Frequency of Episodes:</strong> {{ patient.frequency_of_episodes }}</p>
+        <p><strong>Daily Impact:</strong> {{ patient.daily_impact }}</p>
+        <p><strong>Past Medical History:</strong> {{ patient.past_medical_history }}</p>
+        <p><strong>Medications:</strong> {{ patient.medications }}</p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Patient Information</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Patient Information</h1>
+        <form method="POST">
+            <!-- Patient Name -->
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{ patient.name }}" required><br>
+
+            <!-- Patient Age -->
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" value="{{ patient.age }}" required><br>
+
+            <!-- Patient Gender -->
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender" required>
+                <option value="Male" {% if patient.gender == 'Male' %}selected{% endif %}>Male</option>
+                <option value="Female" {% if patient.gender == 'Female' %}selected{% endif %}>Female</option>
+                <option value="Other" {% if patient.gender == 'Other' %}selected{% endif %}>Other</option>
+            </select><br>
+
+            <!-- Contact Information -->
+            <label for="contact">Contact Info:</label>
+            <input type="text" id="contact" name="contact" value="{{ patient.contact }}" required><br>
+
+            <!-- Dizziness Onset -->
+            <label for="dizziness_onset">Dizziness Onset:</label>
+            <input type="text" id="dizziness_onset" name="dizziness_onset" value="{{ patient.dizziness_onset }}" required><br>
+
+            <!-- Dizziness Duration -->
+            <label for="dizziness_duration">Dizziness Duration:</label>
+            <input type="text" id="dizziness_duration" name="dizziness_duration" value="{{ patient.dizziness_duration }}" required><br>
+
+            <!-- Dizziness Trigger -->
+            <label for="dizziness_trigger">Dizziness Trigger:</label>
+            <input type="text" id="dizziness_trigger" name="dizziness_trigger" value="{{ patient.dizziness_trigger }}"><br>
+
+            <!-- Dizziness Character -->
+            <label for="dizziness_character">Dizziness Character:</label>
+            <input type="text" id="dizziness_character" name="dizziness_character" value="{{ patient.dizziness_character }}" required><br>
+
+            <!-- Hearing Loss -->
+            <label for="hearing_loss">Hearing Loss:</label>
+            <input type="text" id="hearing_loss" name="hearing_loss" value="{{ patient.hearing_loss }}"><br>
+
+            <!-- Tinnitus -->
+            <label for="tinnitus">Tinnitus:</label>
+            <input type="text" id="tinnitus" name="tinnitus" value="{{ patient.tinnitus }}"><br>
+
+            <!-- Nausea / Vomiting -->
+            <label for="nausea_vomiting">Nausea / Vomiting:</label>
+            <input type="text" id="nausea_vomiting" name="nausea_vomiting" value="{{ patient.nausea_vomiting }}"><br>
+
+            <!-- Visual Disturbance -->
+            <label for="visual_disturbance">Visual Disturbance:</label>
+            <input type="text" id="visual_disturbance" name="visual_disturbance" value="{{ patient.visual_disturbance }}"><br>
+
+            <!-- Neurological Symptoms -->
+            <label for="neurological_symptoms">Neurological Symptoms:</label>
+            <input type="text" id="neurological_symptoms" name="neurological_symptoms" value="{{ patient.neurological_symptoms }}"><br>
+
+            <!-- Headache -->
+            <label for="headache">Headache:</label>
+            <input type="text" id="headache" name="headache" value="{{ patient.headache }}"><br>
+
+            <!-- Chest Pain -->
+            <label for="chest_pain">Chest Pain:</label>
+            <input type="text" id="chest_pain" name="chest_pain" value="{{ patient.chest_pain }}"><br>
+
+            <!-- Frequency of Episodes -->
+            <label for="frequency_of_episodes">Frequency of Episodes:</label>
+            <input type="text" id="frequency_of_episodes" name="frequency_of_episodes" value="{{ patient.frequency_of_episodes }}" required><br>
+
+            <!-- Daily Impact -->
+            <label for="daily_impact">Daily Impact:</label>
+            <textarea id="daily_impact" name="daily_impact">{{ patient.daily_impact }}</textarea><br>
+
+            <!-- Past Medical History -->
+            <label for="past_medical_history">Past Medical History:</label>
+            <textarea id="past_medical_history" name="past_medical_history">{{ patient.past_medical_history }}</textarea><br>
+
+            <!-- Medications -->
+            <label for="medications">Medications:</label>
+            <textarea id="medications" name="medications">{{ patient.medications }}</textarea><br>
+
+            <!-- Submit Button -->
+            <input type="submit" value="Update">
+        </form>
+    </div>
+</body>
+</html>
