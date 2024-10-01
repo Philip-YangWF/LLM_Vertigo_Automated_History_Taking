@@ -11,7 +11,7 @@ body {
 .container {
     padding: 20px;
     background-color: #ffffff; /* White background for containers */
-    border-radius: 15px; /* Rounded edges */
+    border-radius: 12px; /* Rounded edges */
     width: 100%;
     max-width: 1300px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow */

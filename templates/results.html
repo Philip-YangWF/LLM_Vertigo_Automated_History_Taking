@@ -17,9 +17,10 @@
             <input type="number" name="age_max" placeholder="Max Age">
             <input type="submit" value="Filter">
 
+            <!-- Temporary Action Box -->
             <div id="action-box" style="display: none;" class="action-box">
-                <button type="submit" name="action" value="delete" class="button danger">Delete Selected</button>
-                <button type="button" onclick="openTagModal()" class="button">Tag Selected</button>
+                <button type="submit" name="action" value="delete">Delete Selected</button>
+                <button type="button" onclick="openTagModal()">Tag Selected</button>
             </div>
 
             <table>
@@ -45,7 +46,7 @@
                             <a href="{{ url_for('results_bp.view_patient', id=patient.id) }}" class="button">View</a>
                             <a href="{{ url_for('results_bp.edit_patient', id=patient.id) }}" class="button">Edit</a>
                             <form action="{{ url_for('results_bp.delete_patient', id=patient.id) }}" method="POST" style="display:inline;">
-                                <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this patient?');" class="button danger">
+                                <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this patient?');" class="button">
                             </form>
                         </td>
                     </tr>
@@ -54,16 +55,18 @@
             </table>
 
             <div class="pagination">
+                <span>Total Results: {{ total_count }}</span>
+                <span style="margin-left: 20px;">Page {{ current_page }} of {{ total_pages }}</span>
                 {% if patients.has_prev %}
-                    <a href="{{ url_for('results_bp.show_results', page=patients.prev_num) }}" class="button">Previous</a>
+                    <a href="{{ url_for('results_bp.show_results', page=patients.prev_num) }}">Previous</a>
                 {% endif %}
-                <span>Page {{ current_page }} of {{ total_pages }}</span>
                 {% if patients.has_next %}
-                    <a href="{{ url_for('results_bp.show_results', page=patients.next_num) }}" class="button">Next</a>
+                    <a href="{{ url_for('results_bp.show_results', page=patients.next_num) }}">Next</a>
                 {% endif %}
             </div>
         </form>
 
+        <!-- JavaScript to handle showing the action box -->
         <script>
             function toggleActionBox() {
                 const checkboxes = document.querySelectorAll('input[name="selected_patients"]');
@@ -102,7 +105,7 @@
                 checkboxes.forEach((checkbox) => {
                     checkbox.checked = true;
                 });
-                toggleActionBox();
+                toggleActionBox(); // Update action box visibility
             }
 
             function deselectAll() {
@@ -110,7 +113,7 @@
                 checkboxes.forEach((checkbox) => {
                     checkbox.checked = false;
                 });
-                toggleActionBox();
+                toggleActionBox(); // Update action box visibility
             }
         </script>
 
