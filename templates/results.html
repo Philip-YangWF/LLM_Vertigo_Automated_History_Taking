@@ -11,18 +11,20 @@
         <h1>Patient Results</h1>
         <p>Search and manage your patient data below.</p>
 
+        <!-- Search and Filter Form -->
         <form method="POST" action="{{ url_for('results_bp.mass_action') }}">
             <input type="text" name="search" placeholder="Search patients..." value="{{ search_query }}">
             <input type="number" name="age_min" placeholder="Min Age">
             <input type="number" name="age_max" placeholder="Max Age">
             <input type="submit" value="Filter">
 
-            <!-- Temporary Action Box -->
+            <!-- Temporary Action Box (appears when patients are selected) -->
             <div id="action-box" style="display: none;" class="action-box">
                 <button type="submit" name="action" value="delete">Delete Selected</button>
                 <button type="button" onclick="openTagModal()">Tag Selected</button>
             </div>
 
+            <!-- Patient Table -->
             <table>
                 <thead>
                     <tr>
@@ -43,17 +45,21 @@
                         <td>{{ patient.gender }}</td>
                         <td>{{ patient.contact }}</td>
                         <td>
+                            <!-- Existing buttons (View, Edit, Delete) -->
                             <a href="{{ url_for('results_bp.view_patient', id=patient.id) }}" class="button">View</a>
                             <a href="{{ url_for('results_bp.edit_patient', id=patient.id) }}" class="button">Edit</a>
                             <form action="{{ url_for('results_bp.delete_patient', id=patient.id) }}" method="POST" style="display:inline;">
                                 <input type="submit" value="Delete" onclick="return confirm('Are you sure you want to delete this patient?');" class="button">
                             </form>
+                            <!-- New AI Summary Button -->
+                            <button class="button" onclick="viewPatientSummary({{ patient.id }})">AI Summary</button>
                         </td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
 
+            <!-- Pagination -->
             <div class="pagination">
                 <span>Total Results: {{ total_count }}</span>
                 <span style="margin-left: 20px;">Page {{ current_page }} of {{ total_pages }}</span>
@@ -66,7 +72,7 @@
             </div>
         </form>
 
-        <!-- JavaScript to handle showing the action box -->
+        <!-- JavaScript to handle showing the action box when checkboxes are selected -->
         <script>
             function toggleActionBox() {
                 const checkboxes = document.querySelectorAll('input[name="selected_patients"]');
@@ -86,6 +92,15 @@
             }
         </script>
 
+        <!-- New AI Summary Modal -->
+        <div id="summaryModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeSummaryModal()">&times;</span>
+                <h2>AI-Generated Summary</h2>
+                <p id="summaryContent"></p>
+            </div>
+        </div>
+
         <!-- Tagging Modal -->
         <div id="tagModal" class="modal">
             <div class="modal-content">
@@ -99,6 +114,33 @@
             </div>
         </div>
 
+        <!-- JavaScript for AI Summary -->
+        <script>
+            function viewPatientSummary(patientId) {
+                fetch(`/summarize_patient/${patientId}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('summaryContent').innerText = data.summary;
+                    openSummaryModal();
+                })
+                .catch(error => console.error('Error:', error));
+            }
+
+            function openSummaryModal() {
+                document.getElementById('summaryModal').style.display = 'block';
+            }
+
+            function closeSummaryModal() {
+                document.getElementById('summaryModal').style.display = 'none';
+            }
+        </script>
+
+        <!-- JavaScript for Tagging -->
         <script>
             function selectAll() {
                 const checkboxes = document.querySelectorAll('input[name="selected_patients"]');
@@ -117,6 +159,7 @@
             }
         </script>
 
+        <!-- CSS Styles for the Modal and the Page -->
         <style>
             .modal {
                 display: none;
@@ -137,8 +180,12 @@
                 border: 1px solid #888;
                 width: 80%;
             }
+            .action-box {
+                margin-top: 20px;
+            }
         </style>
 
+        <!-- Button to add a new patient -->
         <a href="{{ url_for('screening_bp.screening') }}" class="button">Add New Patient</a>
     </div>
 </body>
