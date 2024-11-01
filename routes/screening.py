@@ -3,8 +3,7 @@ from models import db, Patient
 import openai  # Assuming you are using OpenAI API or similar service
 
 # Set up your OpenAI API key
-openai.api_key = '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'
-
+# openai.api_key = 
 screening_bp = Blueprint('screening_bp', __name__)
 
 
